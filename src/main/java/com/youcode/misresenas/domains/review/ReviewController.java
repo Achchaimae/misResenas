@@ -25,7 +25,7 @@ public class ReviewController {
 
     @GetMapping("/{id}")
     public String getReviewById(@PathVariable UUID id,Model model) {
-        model.addAttribute("reviews", reviewService.getReviewById(id).orElse(null));
+        model.addAttribute("review", reviewService.getReviewById(id).orElse(null));
         return "review";
     }
 

@@ -13,11 +13,6 @@ public class authController {
         System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         return "login";
     }
-    @PostMapping("/login")
-    public String loginn() {
-        System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
-        return "login";
-    }
 
     // Login form with error
 //    @RequestMapping("/login-error")
