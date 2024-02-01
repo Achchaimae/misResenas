@@ -23,7 +23,7 @@ public class User implements UserDetails {
     private UUID id;
     private String username;
     private String password;
-    @Enumerated(EnumType.STRING)
+    @Enumerated
     private Role role;
 
     @Override
