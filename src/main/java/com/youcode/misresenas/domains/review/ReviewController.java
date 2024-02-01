@@ -1,6 +1,9 @@
 package com.youcode.misresenas.domains.review;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,34 +11,50 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.UUID;
 
-@RestController
+@Controller
 @RequestMapping("/reviews")
+@AllArgsConstructor
 public class ReviewController {
-    @Autowired
-    private ReviewService reviewService;
+    private final ReviewService reviewService;
 
     @GetMapping
-    public List<Review> getAllReviews() {
-        return reviewService.getAllReviews();
+    public String getAllReviews(Model model) {
+        model.addAttribute("reviews", reviewService.getAllReviews());
+        return "reviews";
     }
 
     @GetMapping("/{id}")
-    public Review getReviewById(@PathVariable UUID id) {
-        return reviewService.getReviewById(id).orElse(null);
+    public String getReviewById(@PathVariable UUID id,Model model) {
+        model.addAttribute("reviews", reviewService.getReviewById(id).orElse(null));
+        return "review";
     }
 
-    @PostMapping
-    public Review createReview(@RequestBody Review review) {
-        return reviewService.createReview(review);
+    @GetMapping("/add")
+    public String createReview() {
+        return "add";
     }
 
-    @PutMapping("/{id}")
-    public Review updateReview(@PathVariable UUID id, @RequestBody Review updatedReview) {
-        return reviewService.updateReview(id, updatedReview);
+    @GetMapping("/update/{id}")
+    public String updateReview(@PathVariable UUID id,Model model) {
+        model.addAttribute("review",reviewService.getReviewById(id));
+        return "update";
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteReview(@PathVariable UUID id) {
+    @PostMapping("/add")
+    public String createReview(@RequestBody Review review ) {
+        reviewService.createReview(review);
+        return "reviews";
+    }
+
+    @PutMapping("update/{id}")
+    public String updateReview(@PathVariable UUID id, @RequestBody Review updatedReview,Model model) {
+        reviewService.updateReview(id, updatedReview);
+        return "reviews";
+    }
+
+    @DeleteMapping("delete/{id}")
+    public String deleteReview(@PathVariable UUID id) {
         reviewService.deleteReview(id);
+        return "reviews";
     }
 }

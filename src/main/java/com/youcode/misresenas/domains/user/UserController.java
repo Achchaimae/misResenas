@@ -1,19 +1,28 @@
 package com.youcode.misresenas.domains.user;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
-@RestController
+@Controller
 @RequestMapping("/users")
+@AllArgsConstructor
 public class UserController {
-    @Autowired
+    private final PasswordEncoder passwordEncoder;
     private UserService userService;
 
-    @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
+    @GetMapping
+    public String createUser() {
+        User user = new User();
+        user.setRole(Role.Admin);
+        user.setUsername("alo");
+        user.setPassword(passwordEncoder.encode("12345"));
+        userService.createUser(user);
+        return "login";
     }
 
     @GetMapping("/{id}")
