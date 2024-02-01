@@ -32,7 +32,6 @@ public class MvcConfig implements WebMvcConfigurer {
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
-
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> repository.findByUsername(username)

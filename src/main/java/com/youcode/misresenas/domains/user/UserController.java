@@ -13,7 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UserController {
     private final PasswordEncoder passwordEncoder;
-    private UserService userService;
+    private final UserService userService;
 
     @GetMapping
     public String createUser() {
