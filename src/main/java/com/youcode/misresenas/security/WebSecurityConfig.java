@@ -1,5 +1,6 @@
 package com.youcode.misresenas.security;
 
+import com.youcode.misresenas.domains.user.Role;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +20,11 @@ public class WebSecurityConfig  {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/users", "/login").permitAll()
+                        .requestMatchers("/reviews").hasRole(Role.Admin.name())
+                        .requestMatchers("/reviews/add").hasRole(Role.Visitor.name())
+                        .requestMatchers("/reviews/delete").hasRole(Role.Admin.name())
+                        .requestMatchers("/reviews/update").hasAnyRole(Role.Visitor.name(),Role.Moderator.name(),Role.Admin.name())
+                        .requestMatchers("/reviews/repport").hasAnyRole(Role.Moderator.name())
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider)
