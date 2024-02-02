@@ -1,9 +1,8 @@
 package com.youcode.misresenas.domains.review;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.youcode.misresenas.domains.user.User;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,4 +23,7 @@ public class Review {
     private String message;
     private boolean repport;
     private String reaction;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }
