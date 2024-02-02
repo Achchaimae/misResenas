@@ -26,8 +26,8 @@ public class User implements UserDetails {
     private String password;
     @Enumerated
     private Role role;
-    @OneToMany(mappedBy = "user")
-    private List<Review> reviews;
+//    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+//    private List<Review> reviews;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
