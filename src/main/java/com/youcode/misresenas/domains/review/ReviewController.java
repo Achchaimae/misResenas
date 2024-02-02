@@ -31,7 +31,8 @@ public class ReviewController {
     }
 
     @GetMapping("/add")
-    public String createReview() {
+    public String createReview(Model model) {
+        model.addAttribute("review", new Review());
         return "add";
     }
 
@@ -42,9 +43,9 @@ public class ReviewController {
     }
 
     @PostMapping("/add")
-    public String createReview(@RequestBody Review review ) {
+    public String createReview(@ModelAttribute("review") Review review ) {
         reviewService.createReview(review);
-        return "reviews";
+        return "redirect:/reviews";
     }
 
     @PutMapping("update/{id}")

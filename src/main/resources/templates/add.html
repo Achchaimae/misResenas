@@ -83,13 +83,18 @@
     <div class="text-2xl font-bold text-center">
         Share Your Ideas and Reviews
     </div>
-    <div
+    <form th:action="@{/reviews/add}" method="post" th:object="${review}"
             class="dark:text-white w-[60%] border border-gray-300 mt-12 rounded-xl flex justify-center m-auto flex-col p-8"
     >
+        <input th:field="*{title}" class="title bg-gray-100 border border-gray-300 p-2 mb-4 outline-none" spellcheck="false" placeholder="Title" name="title" type="text">
+
         <textarea
                 class="title border bg-blue-50 text-black border-gray-300 p-2 mb-4 outline-none rounded h-44"
                 spellcheck="false"
                 type="text"
+                name="message"
+                th:field="*{message}"
+
         /></textarea>
 
         <div class="buttons flex mt-2 gap-8">
@@ -104,7 +109,7 @@
                 Post
             </button>
         </div>
-    </div>
+    </form>
 </section>
 <footer class="bg-white dark:bg-gray-900">
     <div
@@ -146,7 +151,7 @@
         </div>
 
         <p class="mt-6 text-sm text-gray-500 lg:mt-0 dark:text-gray-400">
-            © Copyright 2023 Meraki UI.
+            © Copyright 2024 AchchSine.
         </p>
     </div>
 </footer>

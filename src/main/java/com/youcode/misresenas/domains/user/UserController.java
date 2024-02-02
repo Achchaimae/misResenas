@@ -18,9 +18,9 @@ public class UserController {
     @GetMapping
     public String createUser() {
         User user = new User();
-        user.setRole(Role.Admin);
-        user.setUsername("alo");
-        user.setPassword(passwordEncoder.encode("12345"));
+        user.setRole(Role.Moderator);
+        user.setUsername("mohcine");
+        user.setPassword(passwordEncoder.encode("1234"));
         userService.createUser(user);
         return "login";
     }
