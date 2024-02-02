@@ -22,5 +22,6 @@ public class Review {
     private LocalDate date;
     private String title;
     private String message;
+    private boolean repport;
     private String reaction;
 }

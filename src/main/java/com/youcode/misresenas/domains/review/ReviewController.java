@@ -2,6 +2,7 @@ package com.youcode.misresenas.domains.review;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -52,7 +53,11 @@ public class ReviewController {
         reviewService.updateReview(id, updatedReview);
         return "reviews";
     }
-
+    @GetMapping("repport/{id}")
+    public String repportReview(@PathVariable UUID id) {
+        reviewService.repportReview(id);
+        return "redirect:/reviews";
+    }
     @DeleteMapping("delete/{id}")
     public String deleteReview(@PathVariable UUID id) {
         reviewService.deleteReview(id);
