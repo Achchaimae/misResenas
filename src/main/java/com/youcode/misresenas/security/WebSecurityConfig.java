@@ -29,11 +29,11 @@ public class WebSecurityConfig  {
                 )
                 .authenticationProvider(authenticationProvider)
                 .formLogin((form) -> form
-                        .loginPage("/login")
+                                .loginPage("/login")
                                 .defaultSuccessUrl("/reviews")
                                 .failureUrl("/login?error=true")
 //                        .successHandler(successHandler)
-                        .permitAll()
+                                .permitAll()
                 )
                 .logout((logout) -> logout.permitAll());
 

@@ -1,21 +1,12 @@
-
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
     <title>Reviews</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script
-            src="https://kit.fontawesome.com/93e0a23dda.js"
-            crossorigin="anonymous"
-    ></script>
-    <link
-            href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-            rel="stylesheet"
-    />
 </head>
 
-<body class="w-full min-h-screen bg-white dark:bg-gray-900 dark:text-white">
+<body class="w-full min-h-screen bg-white dark:bg-gray-900">
 <section class="w-full">
     <div class="container relative flex flex-col px-6 py-8 mx-auto">
         <nav class="md:flex md:items-center md:justify-between">
@@ -57,7 +48,7 @@
                             width="24"
                             height="24"
                             viewBox="0 0 24 24"
-                            style="fill: rgba(255, 255, 255, 1); msfilter: "
+                            style="fill: rgba(255, 255, 255, 1);  msfilter: "
                     >
                         <path
                                 d="M16 2H8C4.691 2 2 4.691 2 8v13a1 1 0 0 0 1 1h13c3.309 0 6-2.691 6-6V8c0-3.309-2.691-6-6-6zm4 14c0 2.206-1.794 4-4 4H4V8c0-2.206 1.794-4 4-4h8c2.206 0 4 1.794 4 4v8z"
@@ -74,7 +65,7 @@
                             width="24"
                             height="24"
                             viewBox="0 0 24 24"
-                            style="fill: rgba(255, 255, 255, 1); msfilter: "
+                            style="fill: rgba(255, 255, 255, 1);  msfilter: "
                     >
                         <path d="m10.998 16 5-4-5-4v3h-9v2h9z"></path>
                         <path
@@ -86,45 +77,83 @@
         </nav>
     </div>
 </section>
-<section class="mt-44">
-    <div class="w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
-        <div class="px-6 py-4">
-            <div class="flex justify-center mx-auto text-2xl font-bold">
-                misResenas
+<section
+        class="dark:text-white w-[70%] min-h-screen flex justify-center m-auto flex-col"
+>
+    <div class="text-2xl font-bold text-center">
+        Share Your Ideas and Reviews
+    </div>
+    <form th:action="@{/reviews/add}" method="post" th:object="${review}"
+            class="dark:text-white w-[60%] border border-gray-300 mt-12 rounded-xl flex justify-center m-auto flex-col p-8"
+    >
+        <input th:field="*{title}" class="title bg-gray-100 border border-gray-300 p-2 mb-4 outline-none" spellcheck="false" placeholder="Title" name="title" type="text">
+
+        <textarea
+                class="title border bg-blue-50 text-black border-gray-300 p-2 mb-4 outline-none rounded h-44"
+                spellcheck="false"
+                type="text"
+                name="message"
+                th:field="*{message}"
+
+        /></textarea>
+
+        <div class="buttons flex mt-2 gap-8">
+            <div
+                    class="btn p-1 px-4 font-semibold cursor-pointer text-gray-500 ml-auto"
+            >
+                Cancel
             </div>
+            <button
+                    class="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
+            >
+                Post
+            </button>
+        </div>
+    </form>
+</section>
+<footer class="bg-white dark:bg-gray-900">
+    <div
+            class="container flex flex-col items-center justify-between px-6 py-8 mx-auto lg:flex-row"
+    >
+        <a href="#" class="dark:text-white text-2xl"> misresenas </a>
 
-            <h3 class="mt-3 text-xl font-medium text-center text-gray-600 dark:text-gray-200">Welcome Back</h3>
+        <div
+                class="flex flex-wrap items-center justify-center gap-4 mt-6 lg:gap-6 lg:mt-0"
+        >
+            <a href="#"
+                    class="text-sm text-gray-600 transition-colors duration-300 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400">
+                Overview
+            </a>
 
-            <p class="mt-1 text-center text-gray-500 dark:text-gray-400">Login or create account</p>
-            <div th:if="${param.error}">
-                Invalid username and password.
-            </div>
-            <div th:if="${param.logout}">
-                You have been logged out.
-            </div>
-            <form th:action="@{/login}" method="post">
-                <div class="w-full mt-4">
-                    <input class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" type="text" name="username" placeholder="Email Address" aria-label="Email Address" />
-                </div>
+            <a href="#"
+                    class="text-sm text-gray-600 transition-colors duration-300 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400">
+                Features
+            </a>
 
-                <div class="w-full mt-4">
-                    <input class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" type="password" name="password" placeholder="Password" aria-label="Password" />
-                </div>
+            <a href="#"
+                    class="text-sm text-gray-600 transition-colors duration-300 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400">
+                Pricing
+            </a>
+            <a href="#"
+                    class="text-sm text-gray-600 transition-colors duration-300 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400">
+                Careers
+            </a>
 
-                <div class="flex items-center justify-between mt-4">
-                    <a href="#" class="text-sm text-gray-600 dark:text-gray-200 hover:text-gray-500">Forget Password?</a>
+            <a href="#"
+                    class="text-sm text-gray-600 transition-colors duration-300 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400">
+                Help
+            </a>
 
-                    <button class="px-6 py-2 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
-                        Sign In
-                    </button>
-                </div>
-            </form>
+            <a href="#"
+                    class="text-sm text-gray-600 transition-colors duration-300 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400">
+                Privacy
+            </a>
         </div>
 
-
+        <p class="mt-6 text-sm text-gray-500 lg:mt-0 dark:text-gray-400">
+            © Copyright 2024 AchchSine.
+        </p>
     </div>
-</section>
-
+</footer>
 </body>
 </html>
-

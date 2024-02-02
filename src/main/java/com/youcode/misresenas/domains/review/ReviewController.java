@@ -24,6 +24,13 @@ public class ReviewController {
         return "reviews";
     }
 
+    @GetMapping("/profile")
+    public String getReviews(Model model) {
+        model.addAttribute("reviews", reviewService.getAllReviews());
+        return "profile";
+    }
+
+
     @GetMapping("/{id}")
     public String getReviewById(@PathVariable UUID id,Model model) {
         model.addAttribute("review", reviewService.getReviewById(id).orElse(null));
@@ -31,7 +38,8 @@ public class ReviewController {
     }
 
     @GetMapping("/add")
-    public String createReview() {
+    public String createReview(Model model) {
+        model.addAttribute("review", new Review());
         return "add";
     }
 
@@ -42,9 +50,9 @@ public class ReviewController {
     }
 
     @PostMapping("/add")
-    public String createReview(@RequestBody Review review ) {
+    public String createReview(@ModelAttribute("review") Review review ) {
         reviewService.createReview(review);
-        return "reviews";
+        return "redirect:/reviews";
     }
 
     @PutMapping("update/{id}")
@@ -57,9 +65,9 @@ public class ReviewController {
         reviewService.repportReview(id);
         return "redirect:/reviews";
     }
-    @DeleteMapping("delete/{id}")
+    @GetMapping("delete/{id}")
     public String deleteReview(@PathVariable UUID id) {
         reviewService.deleteReview(id);
-        return "reviews";
+        return "redirect:/reviews/profile";
     }
 }
