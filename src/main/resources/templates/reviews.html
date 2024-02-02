@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:x-transition="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8" />
     <title>Reviews</title>
@@ -13,18 +14,19 @@
             rel="stylesheet"
     />
 </head>
-
 <body class="w-full min-h-screen bg-white dark:bg-gray-900 dark:text-white">
 <section class="w-full">
     <div class="container relative flex flex-col px-6 py-8 mx-auto">
         <nav class="md:flex md:items-center md:justify-between">
             <div class="flex items-center justify-between">
+                <p class="text-white " sec:authorize="hasRole('Moderator')"><span th:text="${#authentication.getAuthorities()
+                }"></span></p>
                 <button
                         x-cloak
                         @click="isOpen = !isOpen"
                         class="text-gray-500 md:hidden dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-400 focus:outline-none"
                 >
-                    misresenas
+                    misResenas
                 </button>
 
                 <a href="#" class="text-2xl font-bold dark:text-white">
@@ -42,12 +44,18 @@
                         class="block text-gray-600 transition-colors duration-300 dark:text-white md:px-6 hover:text-blue-500 dark:hover:text-blue-400"
                 >Reviews</a
                 >
-                <a
-                        href="#"
+                <a  sec:authorize="hasRole('Visitor')"
+                        th:href="@{/reviews/profile}"
                         class="block text-gray-600 transition-colors duration-300 dark:text-white md:px-6 hover:text-blue-500 dark:hover:text-blue-400"
                 >Profile</a
                 >
-                <a th:href="@{/reviews/add}"
+                <a  sec:authorize="hasRole('Admin')"
+                    th:href="@{/reviews/profile}"
+                    class="block text-gray-600 transition-colors duration-300 dark:text-white md:px-6 hover:text-blue-500 dark:hover:text-blue-400"
+                >Admin</a
+                >
+
+                <a th:href="@{/reviews/add}" sec:authorize="hasRole('Visitor')"
                         class="hidden mx-4 text-gray-600 transition-colors duration-300 transform lg:block dark:text-gray-200 hover:text-gray-700 dark:hover:text-gray-400 focus:text-gray-700 dark:focus:text-gray-400 focus:outline-none"
                         aria-label="show notifications"
                 >
@@ -64,23 +72,26 @@
                         <path d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4z"></path>
                     </svg>
                 </a>
-                <button
-                        class="hidden mx-4 text-gray-600 transition-colors duration-300 transform lg:block dark:text-gray-200 hover:text-gray-700 dark:hover:text-gray-400 focus:text-gray-700 dark:focus:text-gray-400 focus:outline-none"
-                        aria-label="show notifications"
-                >
-                    <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            style="fill: rgba(255, 255, 255, 1); msfilter: "
+                <form th:action="@{/logout}" method="post">
+                    <button TYPE="submit"
+                            class="hidden mx-4 text-gray-600 transition-colors duration-300 transform lg:block dark:text-gray-200 hover:text-gray-700 dark:hover:text-gray-400 focus:text-gray-700 dark:focus:text-gray-400 focus:outline-none"
+                            aria-label="show notifications"
                     >
-                        <path d="m10.998 16 5-4-5-4v3h-9v2h9z"></path>
-                        <path
-                                d="M12.999 2.999a8.938 8.938 0 0 0-6.364 2.637L8.049 7.05c1.322-1.322 3.08-2.051 4.95-2.051s3.628.729 4.95 2.051S20 10.13 20 12s-.729 3.628-2.051 4.95-3.08 2.051-4.95 2.051-3.628-.729-4.95-2.051l-1.414 1.414c1.699 1.7 3.959 2.637 6.364 2.637s4.665-.937 6.364-2.637C21.063 16.665 22 14.405 22 12s-.937-4.665-2.637-6.364a8.938 8.938 0 0 0-6.364-2.637z"
-                        ></path>
-                    </svg>
-                </button>
+                        <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                style="fill: rgba(255, 255, 255, 1); msfilter: "
+                        >
+                            <path d="m10.998 16 5-4-5-4v3h-9v2h9z"></path>
+                            <path
+                                    d="M12.999 2.999a8.938 8.938 0 0 0-6.364 2.637L8.049 7.05c1.322-1.322 3.08-2.051 4.95-2.051s3.628.729 4.95 2.051S20 10.13 20 12s-.729 3.628-2.051 4.95-3.08 2.051-4.95 2.051-3.628-.729-4.95-2.051l-1.414 1.414c1.699 1.7 3.959 2.637 6.364 2.637s4.665-.937 6.364-2.637C21.063 16.665 22 14.405 22 12s-.937-4.665-2.637-6.364a8.938 8.938 0 0 0-6.364-2.637z"
+                            ></path>
+                        </svg>
+                    </button>
+                </form>
+
             </div>
         </nav>
     </div>
@@ -134,7 +145,6 @@
                         </svg>
                     </button>
 
-                    <!-- Dropdown menu -->
                     <div
                             x-show="isOpen"
                             @click.away="isOpen = false"
@@ -146,10 +156,7 @@
                             x-transition:leave-end="opacity-0 scale-90"
                             class="absolute right-0 z-20 w-48 py-2 mt-2 origin-top-right bg-white rounded-md shadow-xl dark:bg-gray-800"
                     >
-                        <a
-                                href="#"
-                                class="flex items-center px-3 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
-                        >
+                        <a  sec:authorize="hasRole('Moderator')" th:href="@{/reviews/repport/{id}(id=${review.id})}" class="flex items-center px-3 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                             <span class="mx-1"> Report Review </span>
                         </a>
 
