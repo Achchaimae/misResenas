@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/misResenas
     username: postgres
-    password: root
+    password: 1832003
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
