@@ -4,6 +4,7 @@ package com.youcode.misresenas.domains.review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -22,6 +23,8 @@ public class ReviewService {
     }
 
     public Review createReview(Review review) {
+        review.setDate(LocalDate.now());
+        review.setReaction(null);
         return reviewRepository.save(review);
     }
 
@@ -30,7 +33,7 @@ public class ReviewService {
             updatedReview.setId(id);
             return reviewRepository.save(updatedReview);
         } else {
-            return null; // or throw an exception indicating review not found
+            return null;
         }
     }
 
