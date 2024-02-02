@@ -34,6 +34,15 @@ public class ReviewService {
         }
     }
 
+    public Review repportReview(UUID id) {
+        Optional<Review> review = reviewRepository.findById(id);
+         return review.map(review1 -> {
+            review1.setRepport(true);
+            return reviewRepository.save(review1);
+        }).orElse(null);
+    }
+
+
     public void deleteReview(UUID id) {
         reviewRepository.deleteById(id);
     }
