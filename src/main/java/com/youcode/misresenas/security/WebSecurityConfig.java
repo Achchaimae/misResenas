@@ -20,11 +20,11 @@ public class WebSecurityConfig  {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/users", "/login").permitAll()
-                        .requestMatchers("/reviews").hasRole(Role.Admin.name())
-                        .requestMatchers("/reviews/add").hasRole(Role.Visitor.name())
-                        .requestMatchers("/reviews/delete").hasRole(Role.Admin.name())
-                        .requestMatchers("/reviews/update").hasAnyRole(Role.Visitor.name(),Role.Moderator.name(),Role.Admin.name())
-                        .requestMatchers("/reviews/repport").hasAnyRole(Role.Moderator.name())
+//                        .requestMatchers("/reviews").hasAnyRole(Role.Admin.name(),Role.Moderator.name(),Role.Visitor.name())
+                        .requestMatchers("/reviews/add").hasAnyAuthority(Role.Visitor.name())
+                        .requestMatchers("/reviews/delete").hasAnyAuthority(Role.Admin.name())
+                        .requestMatchers("/reviews/update").hasAnyAuthority(Role.Visitor.name(),Role.Moderator.name(),Role.Admin.name())
+                        .requestMatchers("/reviews/repport").hasAnyAuthority(Role.Moderator.name())
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider)
