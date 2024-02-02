@@ -24,9 +24,9 @@ public class ReviewController {
         return "reviews";
     }
 
-    @GetMapping("/profile")
-    public String getReviews(Model model) {
-        model.addAttribute("reviews", reviewService.getAllReviews());
+    @GetMapping("/profile/{id}")
+    public String getReviews(@PathVariable UUID id,Model model) {
+        model.addAttribute("reviews", reviewService.findAllByUser(id));
         return "profile";
     }
 
@@ -65,6 +65,13 @@ public class ReviewController {
         reviewService.repportReview(id);
         return "redirect:/reviews";
     }
+
+    @GetMapping("admin")
+    public String admin(Model model) {
+        model.addAttribute("reviews",reviewService.findAllReviewsRepported());
+        return "/admin";
+    }
+
     @GetMapping("delete/{id}")
     public String deleteReview(@PathVariable UUID id) {
         reviewService.deleteReview(id);

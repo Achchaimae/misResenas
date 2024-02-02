@@ -1,6 +1,8 @@
 package com.youcode.misresenas.domains.review;
 
 
+import com.youcode.misresenas.domains.user.User;
+import com.youcode.misresenas.domains.user.UserRepositoy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ import java.util.UUID;
 public class ReviewService {
     @Autowired
     private ReviewRepository reviewRepository;
+    @Autowired
+    private UserRepositoy userRepositoy;
 
     public List<Review> getAllReviews() {
         return reviewRepository.findAll();
@@ -43,6 +47,19 @@ public class ReviewService {
             review1.setRepport(true);
             return reviewRepository.save(review1);
         }).orElse(null);
+    }
+
+    public List<Review> findAllByUser(UUID id) {
+        Optional<User> user = userRepositoy.findById(id);
+        return user.map(
+                user1 -> {
+                    return reviewRepository.findAllByUser(user1);
+                }
+        ).orElse(null);
+    }
+
+    public List<Review> findAllReviewsRepported() {
+        return reviewRepository.findAllByRepportIs(true);
     }
 
 
