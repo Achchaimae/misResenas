@@ -1,8 +1,11 @@
 package com.youcode.misresenas.domains.review;
 
+import com.youcode.misresenas.domains.user.User;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -51,6 +54,9 @@ public class ReviewController {
 
     @PostMapping("/add")
     public String createReview(@ModelAttribute("review") Review review ) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        review.setUser(user);
         reviewService.createReview(review);
         return "redirect:/reviews";
     }
@@ -76,5 +82,10 @@ public class ReviewController {
     public String deleteReview(@PathVariable UUID id) {
         reviewService.deleteReview(id);
         return "redirect:/reviews/profile";
+    }
+    @GetMapping("deleteAdmin/{id}")
+    public String deleteReviewAdmin(@PathVariable UUID id) {
+        reviewService.deleteReview(id);
+        return "redirect:/reviews/admin";
     }
 }
