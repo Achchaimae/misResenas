@@ -14,6 +14,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         // You can customize the redirect URL here
-            response.sendRedirect("/reviews");
+        response.sendRedirect("/reviews");
     }
 }

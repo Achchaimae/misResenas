@@ -2,6 +2,7 @@ package com.youcode.misresenas.domains.review;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,13 @@ public class ReviewController {
         return "reviews";
     }
 
+    @GetMapping("/profile/{id}")
+    public String getReviews(@PathVariable UUID id,Model model) {
+        model.addAttribute("reviews", reviewService.findAllByUser(id));
+        return "profile";
+    }
+
+
     @GetMapping("/{id}")
     public String getReviewById(@PathVariable UUID id,Model model) {
         model.addAttribute("review", reviewService.getReviewById(id).orElse(null));
@@ -30,7 +38,8 @@ public class ReviewController {
     }
 
     @GetMapping("/add")
-    public String createReview() {
+    public String createReview(Model model) {
+        model.addAttribute("review", new Review());
         return "add";
     }
 
@@ -41,9 +50,9 @@ public class ReviewController {
     }
 
     @PostMapping("/add")
-    public String createReview(@RequestBody Review review ) {
+    public String createReview(@ModelAttribute("review") Review review ) {
         reviewService.createReview(review);
-        return "reviews";
+        return "redirect:/reviews";
     }
 
     @PutMapping("update/{id}")
@@ -51,10 +60,21 @@ public class ReviewController {
         reviewService.updateReview(id, updatedReview);
         return "reviews";
     }
+    @GetMapping("repport/{id}")
+    public String repportReview(@PathVariable UUID id) {
+        reviewService.repportReview(id);
+        return "redirect:/reviews";
+    }
 
-    @DeleteMapping("delete/{id}")
+    @GetMapping("admin")
+    public String admin(Model model) {
+        model.addAttribute("reviews",reviewService.findAllReviewsRepported());
+        return "/admin";
+    }
+
+    @GetMapping("delete/{id}")
     public String deleteReview(@PathVariable UUID id) {
         reviewService.deleteReview(id);
-        return "reviews";
+        return "redirect:/reviews/profile";
     }
 }
